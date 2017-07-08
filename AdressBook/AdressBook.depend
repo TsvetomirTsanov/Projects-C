@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1405072029 source:/home/ceko0o/Documents/AdressBook/main.cpp
+	<iostream>
+	<iostream>
+	<fstream>
+	<iomanip>
+	<string.h>
+	<stdio.h>
+	<stdlib.h>
+

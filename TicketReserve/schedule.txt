@@ -1,0 +1,7 @@
+Sofia->Plovdiv, 01.05.2013, 07:00, train01, 15.99
+Plovdiv->Varna, 01.05.2013, 12:00, train02, 15
+Plovdiv->Burgas, 01.05.2013, 12:00, train03, 15
+Plovdiv->Sofia, 01.05.2013, 12:00, train01, 15.99
+Yambol->Sofia, 03.07.2013, 01:00, train02, 12
+Sofia->Varna, 01.03.2013, 12:00, train01, 12
+Plovdiv->Lovech, 01.02.2013, 14:00, train05, 12.5

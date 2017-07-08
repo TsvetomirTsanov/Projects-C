@@ -1,0 +1,4 @@
+train02 90   Riding on this one will be quite fun.
+train03 110  Plenty of space in the wagons...if you are a hobbit
+train04 70   We have a fourth train?
+train05 130 The coolest train ever!
