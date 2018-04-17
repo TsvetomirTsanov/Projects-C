@@ -1,5 +1,11 @@
 #include "cities.h"
 
+cities::cities(void)
+{}
+
+cities::~cities(void)
+{}
+
 int count_cities()
 { 
 	cities grad;
@@ -19,14 +25,15 @@ cities* create_obj_cities()
 	file.open("cities.txt",ios::in);  //otvarq faila za 4etene
 
 	if(!file)
-	{ cout << "Could not open the file" << endl;
-	file.close();
+	{ 
+		cout << "Could not open the file" << endl;
+		file.close();
 	}	
 	
 	int counterCity = count_cities();
 	cities* grad = new cities[counterCity];
 	for (int i = 0; i < counterCity;i++)
-	file.getline(grad[i].city,20);
+		file.getline(grad[i].getCity(),20);
 
 	file.close();
 	return &grad[0];
@@ -43,24 +50,25 @@ bool check_city(char* ccity){
 			f.close();
 			return 1;
 	}
-	cities grad;
+	cities city;
 	while (!f.eof())
 	{		
-		f.getline(grad.city,20);
-		if(strcmp(grad.city,ccity ) == 0) return true;
+		f.getline(city.getCity(),20);
+		if(strcmp(city.getCity(),ccity ) == 0) 
+			return true;
 	}
 
 	return false;
 }
 
 int cities::readCity(){
-	cities* grad = create_obj_cities();
+	cities* city = create_obj_cities();
 	int counterCity = count_cities();
 	cout << endl;
 	for (int i = 0; i < counterCity;i++)
-		cout << (i+1) << " "<< grad[i].city << endl;
+		cout << (i+1) << " "<< city[i].city << endl;
 	cout << endl;
-	delete [] grad;
+	delete [] city;
 	return 0;
 }
 
@@ -89,42 +97,48 @@ int cities::addCity(){
 }
 
 int cities::removeCity(){
-	cities grad;
-	grad.readCity();
+	cities city;
+	city.readCity();
 	int x;
 	cout << "Koi grad iskate da bude iztrit? "<<endl;
 	cin >> x;
 	int counterCity = count_cities();
 	if(x >= 1 && x < counterCity)
 	{
-		cities* grad = create_obj_cities();	
+		cities* city = create_obj_cities();	
 		ofstream NewFile("removedCity.txt",ios::out);
 		if(!NewFile)
-			{
-				cout<<"could not open the new file"<< endl;
-				NewFile.close();
-			}
+		{
+			cout<<"could not open the new file"<< endl;
+			NewFile.close();
+		}
 		for(int i = 0; i < counterCity;i++)
-			{
-				if((x-1) == i)i++;
-				NewFile << grad[i].city << endl;	
-			}
+		{
+			if((x-1) == i)
+				i++;
+
+			NewFile << city[i].city << endl;	
+		}
 
 		NewFile.close();
 
 		//remove("cities.txt");
 		//rename("removedCity.txt","cities.txt");
 		return 0;
+
 	}
 	cout << "Vuveli ste greshen nomer za grad: "<< endl;
 	return 1;
 }
 
-cities::cities(void)
+
+char * cities::getCity()
 {
+	return city;
 }
 
-cities::~cities(void)
+void cities::setCity(char* city )
 {
+	strcpy(this->city, city);
 }
 

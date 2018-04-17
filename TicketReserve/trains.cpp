@@ -4,26 +4,27 @@ ostream& operator<<(ostream& out, const trains& train);
 istream& operator>>(istream& in, trains& train);
 
 
-
 int trains::count_obj_trains()
 { 
-	trains vlak;
 	fstream file;
 	file.open("trains.txt", ios::in|ios::out);
 	char line[256];
 	int counterTrain = 0;
+	
 	while(file.getline(line,256,'\n'))
 		counterTrain++;
 	file.close();
+	
 	return counterTrain;
 }
 
 bool check_choise(int x)
 {
-	trains vlak1;
-	int counterTrain = vlak1.count_obj_trains();
+	trains train1;
+	int counterTrain = train1.count_obj_trains();
 	if(x >=1 && x <= counterTrain)
 		return true;
+
 	return false;
 }
 
@@ -32,8 +33,9 @@ trains* trains::create_obj_trains(){
 	file.open("trains.txt",ios::in);  //otvarq faila za 4etene
 
 	if(!file)
-	{ cout << "Could not open the file" << endl;
-	file.close();
+	{ 
+		cout << "Could not open the file" << endl;
+		file.close();
 	}	
 	
 	char ctrainID[10];
@@ -41,31 +43,31 @@ trains* trains::create_obj_trains(){
 	char cdescription[100];
 		
 	char* ptr;
-	trains vlak1;
-	int counterTrain = vlak1.count_obj_trains();
-	trains *vlak = new trains[counterTrain];                     
+	trains train1;
+	int counterTrain = train1.count_obj_trains();
+	trains* train = new trains[counterTrain];                     
 	char line[1024];
 	int i = 0;
 	while(file.getline(line,1024,'\n')){
 
 		ptr = strtok(line,", ");
-		strcpy(vlak[i].trainID, ptr);
+		strcpy(train[i].trainID, ptr);
 		
 		ptr = strtok(NULL,", ");
-		vlak[i].seats = atoi(ptr);		
+		train[i].seats = atoi(ptr);		
 		
 		ptr = strtok(NULL,",");
-		strcpy(vlak[i].description , ptr);		
+		strcpy(train[i].description , ptr);		
 		i++;
-		
 	}
 	file.close();                     //zatvarq faila
-	return &vlak[0];
+	return &train[0];
 }
 
 void save_in_file(trains* train)
-{	trains vlak1;
-	int counterTrain = vlak1.count_obj_trains();
+{	
+	trains train1;
+	int counterTrain = train1.count_obj_trains();
 	fstream file;
 	file.open("trains.txt",ios::out);
 
@@ -81,24 +83,25 @@ bool trains::check_trains(char* cID)
 	file.open("trains.txt",ios::in);  //otvarq faila za 4etene
 
 	if(!file)
-	{ cout << "Could not open the file" << endl;
-	file.close();
+	{
+		cout << "Could not open the file" << endl;
+		file.close();
 	}	
 	char ctrainID[10];
 	char* ptr;
 	trains vlak;
 	                     
 	char line[1024];
-	while(file.getline(line,1024,'\n')){
-
+	while(file.getline(line,1024,'\n'))
+	{
 		ptr = strtok(line,", ");
 		strcpy(vlak.trainID, ptr);
 		cout << vlak.trainID << ", ";
 		if(strcmp(cID,vlak.trainID)==0) 
-			{
-				file.close();
-				return true;
-			}
+		{
+			file.close();
+			return true;
+		}
 	}
 
 	file.close();
@@ -109,15 +112,14 @@ bool trains::check_trains(char* cID)
 //read trains function
 int trains::readTrains(){
 	
-	trains *vlak = create_obj_trains();                //suzdavam obektite
+	trains *train = create_obj_trains();
 	int counterTrain = count_obj_trains();
 	cout << endl;
-	for (int i = 0; i < counterTrain; i++)
-		{
-			cout << (i+1) << " " << vlak[i].trainID << " " << vlak[i].seats << " " << vlak[i].description << endl;
-		}
+	for (int i = 0; i < counterTrain; i++){
+		cout << (i+1) << " " << train[i].trainID << " " << train[i].seats << " " << train[i].description << endl;
+	}
 	cout << endl;
-	delete [] vlak;                               ////////////////////////////////////////
+	delete[] train;
 	return 0;
 }
 
@@ -125,7 +127,9 @@ int trains::readTrains(){
 int trains::addTrain(){
 	fstream file;
 	file.open("trains.txt",ios::out|ios::app);    
-	if(!file) cout << "ne e otv faila"<< endl;
+	
+	if(!file) 
+		cout << "ne e otv faila"<< endl;
 
 	cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );
 	cout << "vuvedete ID na noviq vlak: "<< endl;
@@ -133,17 +137,14 @@ int trains::addTrain(){
 	cin.getline(newID,10);
 	if(!check_trains(newID))
 	{
-	
 		cout<<"vuvedete broi na mestata: "<< endl;    
 		char newSeats[100];
 		cin.getline(newSeats,100);
 	
-
 		cout << "vuvedete opisanie: " << endl; 
 		char newDescript[100];
 		cin.getline(newDescript,100);
 	
-
 		file << endl << newID << ", " << newSeats << ", " << newDescript;   
 		file.close();  
 		return 0;
@@ -159,27 +160,28 @@ int trains::updateTrain(){
 	int i;
 	cin >> i;
 	if (check_choise(i))
-	{	trains vlak2;
-		trains *vlak = vlak2.create_obj_trains();           //suzdava obektite
+	{	
+		trains train2;
+		trains *train = train2.create_obj_trains();
 
-		cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );   // vajno za cin.getline 4isti potoka
+		cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );   // za cin.getline 4isti potoka
 		cout << " Vuvedete novo ID na vlaka: " << endl;
 		char newID[10];
 		cin.getline(newID,10);
-		strcpy(vlak[i-1].trainID,newID);	
+		strcpy(train[i-1].trainID,newID);	
 
 		cout << " Vuvedete broi mesta: " << endl;
 		char newSeats[100];
 		cin.getline(newSeats,100);
-		vlak[i-1].seats = atoi(newSeats);
+		train[i-1].seats = atoi(newSeats);
 
 		cout << "Vuvedete kratko opisanie: "<< endl;
 		char newDescr[100];
 		cin.getline(newDescr,100);
-		strcpy(vlak[i-1].description,newDescr);
+		strcpy(train[i-1].description,newDescr);
 
-		save_in_file(vlak); 
-		delete [] vlak;
+		save_in_file(train); 
+		delete [] train;
 	}
 	cout << "Vuveli ste greshen nomer! "<< endl; 
 	return 0;
@@ -236,11 +238,10 @@ ostream& operator<<(ostream& out, const trains& train)
 }
 istream& operator>>(istream& in, trains& train)
 { 
-in.getline(train.trainID, 10, ',');
-in >> train.seats;
-in.getline(train.description, 100, '\n');
-return in;
-
+	in.getline(train.trainID, 10, ',');
+	in >> train.seats;
+	in.getline(train.description, 100, '\n');
+	return in;
 }
 trains::trains(char newTrainID[],int newSeats, char newDescript[]){
 	strcpy(trainID,newTrainID);

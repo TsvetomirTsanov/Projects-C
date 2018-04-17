@@ -4,6 +4,7 @@
 #include"cities.h"
 #include"trains.h"
 #include"schedule.h"
+
 using namespace std;
 
 struct command

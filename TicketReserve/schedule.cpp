@@ -60,18 +60,18 @@ void save_in_file_schedule(schedule* sched)
 	schedule razpis1;
 	int counterSchedule = razpis1.count_schedule();
 	fstream file;
-	file.open("schedule.txt",ios::out); //otvarq faila za pisane v nego
+	file.open("schedule.txt",ios::out); 
 	
 	for ( int i = 0; i < counterSchedule; i++){
 		file << sched[i];
 	}
-	file.close();   //zatvarq faila
+	file.close();   
 }
 
 bool check_choise_sch(int x)
 {
-	schedule razpis1;
-	int counterSchedule = razpis1.count_schedule();
+	schedule shedule1;
+	int counterSchedule = shedule1.count_schedule();
 	if(x >=1 && x <= counterSchedule)
 		return true;
 	return false;
@@ -80,22 +80,21 @@ bool check_choise_sch(int x)
 
 int schedule::readSchedule()
 {
-		schedule *razpis = create_schedule(); 
-		schedule razpis1;
-		int counterSchedule = razpis1.count_schedule();
+		schedule *allShedules = create_schedule(); 
+		schedule shedule1;
+		int counterSchedule = shedule1.count_schedule();
 		for (int i = 0; i < counterSchedule; i++)
 		{
-			cout << (i+1) << " " << razpis[i];
+			cout << (i+1) << " " << allShedules[i];
 		}
 		cout << endl;
 
-		delete [] razpis; 
+		delete [] allShedules; 
 		return 0;
 }
 
 int schedule::addSchedule()
 {	
-
 	fstream file;
 	file.open("schedule.txt",ios::out|ios::app);  
 	if(!file) cout << "Couldn't open the file!"<< endl;
@@ -140,46 +139,47 @@ int schedule::updateSchedule()
 	int i;
 	cin >> i;
 	if (check_choise_sch(i))
-	{	schedule razpis1;
+	{
+		schedule shedule1;
 	
-		schedule *razpis = razpis1.create_schedule();           
+		schedule *allShedules = shedule1.create_schedule();           
 
 		cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' ); 
 		
 		cout << " Vuvedete nachalen grad: " << endl;
 		char cfrom[20];
 		cin.getline(cfrom,20);
-		strcpy(razpis[i-1].from,cfrom);
+		strcpy(allShedules[i-1].from,cfrom);
 	
 		cout << " Vuvedete kraen grad: " << endl;
 		char cto[20];
 		cin.getline(cto,20);
-		strcpy(razpis[i-1].to,cto);
+		strcpy(allShedules[i-1].to,cto);
 
 		cout << " Vuvedete data: " << endl;    // proverka za pravilno vuvejdane na data
 		char cstrdate[12];
 		cin.getline(cstrdate,12);
-		strcpy(razpis[i-1].strDate,cstrdate);
+		strcpy(allShedules[i-1].strDate,cstrdate);
 
 		cin.ignore( std::numeric_limits<std::streamsize>::max(), '\n' );
 		cout << " Vuvedete chas: " << endl;
 		char cstrtime[7];
 		cin.getline(cstrtime,7);
-		strcpy(razpis[i-1].strtime,cstrtime);
+		strcpy(allShedules[i-1].strtime,cstrtime);
 
 		cout << " Vuvedete ID na vlaka: " << endl;
 		char cID[10];
 		cin.getline(cID,10);
-		strcpy(razpis[i-1].ID,cID);
+		strcpy(allShedules[i-1].ID,cID);
 	
 		cout << " Vuvedete cena na bileta: " << endl;  // proverka dali e vuveden ?
 		char cprice[10];
 		cin.getline(cprice,10);
-		razpis[i-1].price = atof(cprice);	
+		allShedules[i-1].price = atof(cprice);	
 			
-		save_in_file_schedule(razpis); 
+		save_in_file_schedule(allShedules); 
 
-		delete [] razpis;
+		delete [] allShedules;
 	}else{cout << "Vuveli ste greshen nomer: "<< endl;}
 	return 0;
 }
@@ -252,7 +252,7 @@ ostream& operator<<(ostream& out, const schedule& sch)
 }
 int& schedule::operator[] (int x)
 {
- return x;
+	return x;
 }
 schedule::schedule(char* cfrom,char* cto,char* cstrdate,char* cstrtime,char* ctrainID,float cprice) //////////////////////////////////////////////////
 {

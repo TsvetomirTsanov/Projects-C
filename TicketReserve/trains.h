@@ -14,20 +14,20 @@ public:
 	int seats;
 	char description[100];
 
+
+	trains(char[], int, char[]);
+	trains(void);
+	~trains();
+	trains& operator=(trains const&);
+
 	trains* create_obj_trains();
 	int count_obj_trains();
 	bool check_trains(char*);
+
 	int readTrains();
 	int addTrain();
 	int updateTrain();
 	int deleteTrain();
-
-
-	trains& operator=(trains const&);
-
-	trains(char[],int,char[]);
-	trains(void);
-	~trains();
 };
 
 

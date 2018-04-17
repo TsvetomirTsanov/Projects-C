@@ -6,9 +6,8 @@
 #include <iomanip>
 #include"cities.h"
 #include"trains.h"
+
 using namespace std;
-
-
 
 class schedule
 {
